@@ -235,6 +235,23 @@ SelectActivities()
         SELECT_ACTIVITY(injectionGlobals.profileMode, CUPTI_ACTIVITY_KIND_MARKER_DATA);
     }
 
+    // Optional: PC Sampling - enable via CUPTI_ENABLE_PC_SAMPLING=1
+    const char *enablePcSampling = getenv("CUPTI_ENABLE_PC_SAMPLING");
+    if (enablePcSampling && atoi(enablePcSampling) == 1) {
+        SELECT_ACTIVITY(injectionGlobals.profileMode, CUPTI_ACTIVITY_KIND_PC_SAMPLING);
+        SELECT_ACTIVITY(injectionGlobals.profileMode, CUPTI_ACTIVITY_KIND_PC_SAMPLING_RECORD_INFO);
+    }
+
+    // Optional: Legacy Metrics - enable via CUPTI_ENABLE_METRICS=1
+    // Note: This uses the legacy Activity API for metrics, which is deprecated on Volta+
+    // and may not work for concurrent kernels or modern GPUs.
+    // For modern GPUs (Volta+), use the CUPTI Profiling API (Perfworks) instead.
+    const char *enableMetrics = getenv("CUPTI_ENABLE_METRICS");
+    if (enableMetrics && atoi(enableMetrics) == 1) {
+        SELECT_ACTIVITY(injectionGlobals.profileMode, CUPTI_ACTIVITY_KIND_METRIC);
+        SELECT_ACTIVITY(injectionGlobals.profileMode, CUPTI_ACTIVITY_KIND_METRIC_INSTANCE);
+    }
+
     return CUPTI_SUCCESS;
 }
 
@@ -572,6 +589,15 @@ SetupCupti(void)
 
     // Enable CUPTI activities.
     CUPTI_API_CALL(EnableCuptiActivities(NULL));
+
+    // Configure PC Sampling if enabled
+    if (IS_ACTIVITY_SELECTED(injectionGlobals.profileMode, CUPTI_ACTIVITY_KIND_PC_SAMPLING)) {
+        CUpti_ActivityPCSamplingConfig configPC;
+        configPC.size = sizeof(CUpti_ActivityPCSamplingConfig);
+        configPC.samplingPeriod = CUPTI_ACTIVITY_PC_SAMPLING_PERIOD_MIN;
+        configPC.samplingPeriod2 = 0;
+        CUPTI_API_CALL_VERBOSE(cuptiActivityConfigurePCSampling(NULL, &configPC));
+    }
 }
 
 #ifdef _WIN32

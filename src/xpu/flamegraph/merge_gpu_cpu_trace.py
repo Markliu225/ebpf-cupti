@@ -12,6 +12,7 @@ import argparse
 from pathlib import Path
 from typing import List, Dict, Tuple, Any, Optional
 from collections import defaultdict
+from datetime import datetime, timezone
 
 
 class GPUKernelEvent:
@@ -63,6 +64,7 @@ class TraceMerger:
         self.cpu_stacks_by_thread = defaultdict(list)  # (pid, tid) -> List[CPUStack]
         self.merged_stacks = defaultdict(int)  # stack_string -> count
         self.timestamp_tolerance_ns = int(timestamp_tolerance_ms * 1_000_000)
+        self.aligned_events = []  # Detailed timeline entries
 
     def parse_cpu_trace(self, cpu_file: str):
         """Parse CPU trace file in extended folded format from Rust profiler"""
@@ -186,6 +188,23 @@ class TraceMerger:
         print(f"Parsed {launch_count} cudaLaunchKernel runtime events")
 
 
+    def _record_aligned_event(self, cpu_stack: CPUStack, gpu_kernel: GPUKernelEvent, gpu_launch: CudaLaunchEvent):
+        self.aligned_events.append({
+            'cpu_timestamp_ns': cpu_stack.timestamp_ns,
+            'comm': cpu_stack.comm,
+            'pid': cpu_stack.pid,
+            'tid': cpu_stack.tid,
+            'cpu': cpu_stack.cpu,
+            'stack': cpu_stack.stack.copy(),
+            'gpu_kernel': gpu_kernel.name,
+            'gpu_start_us': gpu_kernel.start_us,
+            'gpu_end_us': gpu_kernel.end_us,
+            'gpu_duration_us': gpu_kernel.end_us - gpu_kernel.start_us,
+            'correlation_id': gpu_launch.correlation_id,
+            'launch_start_us': gpu_launch.start_us,
+            'launch_end_us': gpu_launch.end_us,
+        })
+
     def merge_traces(self):
         """Correlate CPU stacks with GPU kernels using optimal matching strategy"""
         print("Correlating CPU stacks with GPU kernels...")
@@ -236,6 +255,7 @@ class TraceMerger:
                         stack_str = ';'.join(merged_stack)
                         kernel_duration_us = int(gpu_kernel.end_us - gpu_kernel.start_us)
                         self.merged_stacks[stack_str] += kernel_duration_us
+                        self._record_aligned_event(cpu_stack, gpu_kernel, gpu_launches[i])
                         matched_count += 1
                     else:
                         unmatched_count += 1
@@ -294,6 +314,7 @@ class TraceMerger:
                             stack_str = ';'.join(merged_stack)
                             kernel_duration_us = int(gpu_kernel.end_us - gpu_kernel.start_us)
                             self.merged_stacks[stack_str] += kernel_duration_us
+                            self._record_aligned_event(cpu_stack, gpu_kernel, gpu_launches[gpu_idx])
                             matched_count += 1
                             gpu_idx += 1
                         else:
@@ -322,6 +343,32 @@ class TraceMerger:
 
         total_samples = sum(self.merged_stacks.values())
         print(f"Wrote {len(self.merged_stacks)} unique stacks ({total_samples} total samples)")
+
+    def write_timeline(self, output_file: str):
+        """Write a human-readable timeline aligning CPU stacks with GPU kernels"""
+        if not self.aligned_events:
+            print("No aligned events to write timeline.")
+            return
+
+        events = sorted(self.aligned_events, key=lambda e: e['cpu_timestamp_ns'])
+        with open(output_file, 'w') as f:
+            for evt in events:
+                cpu_time_ms = evt['cpu_timestamp_ns'] / 1_000_000.0
+                human_ts = datetime.fromtimestamp(evt['cpu_timestamp_ns'] / 1_000_000_000.0, tz=timezone.utc)
+                human_str = human_ts.strftime('%Y-%m-%d %H:%M:%S.%f %Z')
+                f.write(
+                    f"[CPU ts={evt['cpu_timestamp_ns']} ns (~{cpu_time_ms:.3f} ms, {human_str})] PID {evt['pid']} "
+                    f"(comm={evt['comm']}) TID {evt['tid']} CPU {evt['cpu']}\n"
+                )
+                f.write(
+                    f"  GPU kernel: {evt['gpu_kernel']} (corr={evt['correlation_id']})\n"
+                )
+                f.write(
+                    f"  Launch start: {evt['launch_start_us']:.0f} us, Kernel window: {evt['gpu_start_us']:.0f}-{evt['gpu_end_us']:.0f} us "
+                    f"(duration {evt['gpu_duration_us']:.0f} us)\n\n"
+                )
+
+        print(f"Timeline written to: {output_file}")
 
     def generate_summary(self):
         """Generate summary statistics"""

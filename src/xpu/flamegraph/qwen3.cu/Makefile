@@ -2,7 +2,7 @@
 # example override to clang: make run CC=clang
 CC = gcc
 # For CUDA compile
-CUDA_INSTALL_PATH ?= /usr/local/cuda-12.9
+CUDA_INSTALL_PATH ?= /usr/local/cuda-13.0
 NVCC := "$(CUDA_INSTALL_PATH)/bin/nvcc"
 INCLUDES := -I"$(CUDA_INSTALL_PATH)/include"
 LIB_PATH ?= $(CUDA_INSTALL_PATH)/lib64

@@ -66,7 +66,7 @@ class GPUPerf:
         if not cuda_lib_path:
             cuda_paths = [
                 "/usr/local/cuda-12.9/lib64/libcudart.so.12",
-                "/usr/local/cuda-13.0/lib64/libcudart.so.12",
+                "/usr/local/cuda-13.0/lib64/libcudart.so.13",
                 "/usr/local/cuda/lib64/libcudart.so.12",
                 "/usr/local/cuda-12.8/lib64/libcudart.so.12",
             ]
