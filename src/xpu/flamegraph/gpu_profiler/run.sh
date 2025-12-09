@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sudo -E PYTHON_BIN=/home/mark/anaconda3/envs/ebpf-cupti/bin/python ./gpu_profiler/run_dual_traces.sh
+# sudo -E PYTHON_BIN=/home/mark/anaconda3/envs/ebpf-cupti/bin/python ./gpu_profiler/run.sh
 set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
