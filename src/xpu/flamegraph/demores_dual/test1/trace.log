@@ -1,14 +1,14 @@
 Using device: cuda | params=3,148,801
-Epoch 01/10 | loss=2051.74680 | time=0.911s | mem=97.3 MiB
-Epoch 02/10 | loss=2038.41010 | time=0.701s | mem=97.3 MiB
-Epoch 03/10 | loss=2063.51807 | time=0.703s | mem=97.3 MiB
-Epoch 04/10 | loss=2056.95247 | time=0.702s | mem=97.3 MiB
-Epoch 05/10 | loss=2040.71633 | time=0.702s | mem=97.3 MiB
-Epoch 06/10 | loss=2048.34596 | time=0.703s | mem=97.3 MiB
-Epoch 07/10 | loss=2060.44701 | time=0.702s | mem=97.3 MiB
-Epoch 08/10 | loss=2064.91560 | time=0.704s | mem=97.3 MiB
-Epoch 09/10 | loss=2028.45777 | time=0.704s | mem=97.3 MiB
-Epoch 10/10 | loss=2054.41578 | time=0.702s | mem=97.3 MiB
+Epoch 01/10 | loss=2060.85249 | time=0.937s | mem=97.3 MiB
+Epoch 02/10 | loss=2050.74563 | time=0.713s | mem=97.3 MiB
+Epoch 03/10 | loss=2041.46902 | time=0.713s | mem=97.3 MiB
+Epoch 04/10 | loss=2040.75649 | time=0.712s | mem=97.3 MiB
+Epoch 05/10 | loss=2054.71631 | time=0.712s | mem=97.3 MiB
+Epoch 06/10 | loss=2062.30941 | time=0.712s | mem=97.3 MiB
+Epoch 07/10 | loss=2047.44956 | time=0.711s | mem=97.3 MiB
+Epoch 08/10 | loss=2049.29214 | time=0.712s | mem=97.3 MiB
+Epoch 09/10 | loss=2051.98128 | time=0.713s | mem=97.3 MiB
+Epoch 10/10 | loss=2037.86447 | time=0.714s | mem=97.3 MiB
 训练结束，可搭配 cuda_cupti_integrator.py 同时运行以采集事件。
 CUPTI trace output will be written to: /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/gpu_results.txt
 Calling CUPTI API: cuptiSubscribe(&globals.subscriberHandle, (CUpti_CallbackFunc)pTraceCallback, pUserData)
@@ -29,121 +29,99 @@ Disabling CUPTI_ACTIVITY_KIND_RUNTIME.
 Disabling CUPTI_ACTIVITY_KIND_CONCURRENT_KERNEL.
 Calling CUPTI API: cuptiActivityFlushAll(1)
 [CPU] 启动 eBPF profiler，输出: /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/cpu_results.txt
-执行命令: cd /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph && python3 gpu_profiler/test1.py
+执行命令: cd /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph && /home/mark/anaconda3/envs/ebpf-cupti/bin/python gpu_profiler/test1.py
 [CPU] 停止 eBPF profiler
 [GPU] Chrome Trace 写入 /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/gpu_results.json
 Parsing CPU uprobe trace (extended folded format): /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/cpu_results.txt
-Warning: Failed to parse line: 2025-11-29T14:41:38.323250Z ERROR blazesym::symbolize::symbolizer: error=failed to stat `/proc/11356... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323250Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323265Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323265Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323275Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323275Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323284Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323284Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323292Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323292Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323301Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323301Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323310Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323310Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323319Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323319Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323327Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323327Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323335Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323335Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323343Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323343Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323351Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323351Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323359Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323359Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323370Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323370Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323377Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323377Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323385Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323385Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323393Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323393Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323400Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323400Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323408Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323408Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323415Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323415Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323428Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323428Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.323436Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.323436Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356880Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356880Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356894Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356894Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356902Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356902Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356911Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356911Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356920Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356920Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356928Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356928Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356936Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356936Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356944Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356944Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356953Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356953Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356961Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356961Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356970Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356970Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356979Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356979Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356989Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356989Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.356997Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.356997Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357005Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357005Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357013Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357013Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357021Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357021Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357028Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357028Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357036Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357036Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357044Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357044Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357051Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357051Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357059Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357059Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357066Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357066Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357073Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357073Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.357081Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.357081Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391804Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391804Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391822Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391822Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391834Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391834Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391846Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391846Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391857Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391857Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391866Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391866Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391874Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391874Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391882Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391882Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391894Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391894Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391903Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391903Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391912Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391912Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391920Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391920Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391928Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391928Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391936Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391936Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391945Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391945Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391952Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391952Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391960Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391960Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391968Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391968Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391976Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391976Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391983Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391983Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391991Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391991Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.391998Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.391998Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.392007Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.392007Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.392015Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.392015Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.392022Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.392022Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.424949Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.424949Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.424962Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.424962Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.424971Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.424971Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.424979Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.424979Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.424991Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.424991Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.424999Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.424999Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425008Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425008Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425016Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425016Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425024Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425024Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425032Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425032Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425042Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425042Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425050Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425050Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425058Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425058Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425066Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425066Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425075Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425075Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425083Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425083Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425091Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425091Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425101Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425101Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425109Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425109Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425116Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425116Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425124Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425124Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425132Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425132Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425139Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425139Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425147Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425147Z'
-Warning: Failed to parse line: 2025-11-29T14:41:38.425155Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-11-29T14:41:38.425155Z'
-Parsed 11602 CPU stack traces from cudaLaunchKernel hooks
+Warning: Failed to parse line: 2025-12-09T15:35:46.461620Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461620Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461641Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461641Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461650Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461650Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461660Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461660Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461670Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461670Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461679Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461679Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461689Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461689Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461698Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461698Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461707Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461707Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461716Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461716Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461727Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461727Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461739Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461739Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461748Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461748Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461757Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461757Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461766Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461766Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461775Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461775Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461784Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461784Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461793Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461793Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461802Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461802Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461811Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461811Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461819Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461819Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461828Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461828Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461836Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461836Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461845Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461845Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.461854Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.461854Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494365Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494365Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494378Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494378Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494388Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494388Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494397Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494397Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494407Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494407Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494417Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494417Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494426Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494426Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494438Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494438Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494447Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494447Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494457Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494457Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494468Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494468Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494477Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494477Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494486Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494486Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494495Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494495Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494504Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494504Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494513Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494513Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494522Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494522Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494531Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494531Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494540Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494540Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494549Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494549Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494557Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494557Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494566Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494566Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494576Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494576Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494585Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494585Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.494593Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.494593Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527197Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527197Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527211Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527211Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527220Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527220Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527231Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527231Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527250Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527250Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527260Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527260Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527269Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527269Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527278Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527278Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527288Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527288Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527297Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527297Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527307Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527307Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527317Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527317Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527326Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527326Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527335Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527335Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527344Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527344Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527353Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527353Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527362Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527362Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527373Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527373Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527382Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527382Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527391Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527391Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527399Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527399Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527408Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527408Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527416Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527416Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527424Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527424Z'
+Warning: Failed to parse line: 2025-12-09T15:35:46.527433Z ERROR blazesym::symbolize::symbolizer: error=proc maps does not contain ... Error: invalid literal for int() with base 10: '2025-12-09T15:35:46.527433Z'
+Parsed 12036 CPU stack traces from cudaLaunchKernel hooks
 Found 2 unique threads
 Parsing GPU CUPTI trace: /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/gpu_results.json
 Parsed 17012 GPU kernel events
 Parsed 15512 cudaLaunchKernel runtime events
 Correlating CPU stacks with GPU kernels...
-  Thread (1135696, 1135696): Using sequential+time matching (CPU=3887, GPU=15512)
-    Estimated clock offset: 51105720.77 ms
-    Skipped: 0 CPU events, 924 GPU events (outside time window)
-Matched 3887 CPU stacks with GPU kernels
-Unmatched: 7715 CPU stacks (may indicate missing GPU events)
-Total unique stacks: 688
+  Thread (245348, 245348): Using sequential+time matching (CPU=4037, GPU=15512)
+    Estimated clock offset: 113.81 ms
+    Skipped: 0 CPU events, 960 GPU events (outside time window)
+Matched 4037 CPU stacks with GPU kernels
+Unmatched: 7999 CPU stacks (may indicate missing GPU events)
+Total unique stacks: 711
 Writing folded output to: /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/cpu_gpu_merged.folded
-Wrote 688 unique stacks (905553 total samples)
+Wrote 711 unique stacks (929322 total samples)
 [MERGE] 合并结果写入 /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/cpu_gpu_merged.folded
 Timeline written to: /home/mark/workspace/ebpf-cupti/src/xpu/flamegraph/demores_dual/test1/cpu_gpu_timeline.txt
 完成: 原始 GPU trace、CPU 报文以及可选 merged 结果均已生成。

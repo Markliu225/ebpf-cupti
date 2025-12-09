@@ -28,6 +28,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <thread>
+#include <signal.h>
 
 #ifdef _WIN32
 #define strdup _strdup
@@ -41,6 +42,7 @@
 #include "pm_sampling.h"
 
 std::atomic<bool> stopDecodeThread(false);
+std::atomic<bool> samplingStopRequested(false);
 // Monitoring-only tool: no built-in workload.
 
 struct ParsedArgs
@@ -86,8 +88,15 @@ void DecodeCounterData(
     CUptiResult& result
 );
 
+void HandleSignal(int)
+{
+    samplingStopRequested.store(true);
+}
+
 int main(int argc, char *argv[])
 {
+    signal(SIGINT, HandleSignal);
+    signal(SIGTERM, HandleSignal);
     ParsedArgs args = parseArgs(argc, argv);
     DRIVER_API_CALL(cuInit(0));
 
@@ -168,6 +177,7 @@ int PmSamplingQueryMetrics(std::string chipName, std::vector<uint8_t>& counterAv
 
 int PmSamplingCollection(std::vector<uint8_t>& counterAvailibilityImage, ParsedArgs& args)
 {
+    samplingStopRequested = false;
     std::string chipName;
     CuptiPmSampling::GetChipName(args.deviceIndex, chipName);
 
@@ -210,10 +220,21 @@ int PmSamplingCollection(std::vector<uint8_t>& counterAvailibilityImage, ParsedA
     // 4. Start the PM sampling and monitor for duration
     CUPTI_API_CALL(cuptiPmSamplingTarget.StartPmSampling());
     stopDecodeThread = false;
+    auto waitStep = std::chrono::milliseconds(200);
+    if (args.durationSec == 0)
     {
-        uint64_t secs = args.durationSec;
-        if (secs == 0) secs = 10; // safety default
-        std::this_thread::sleep_for(std::chrono::seconds(secs));
+        while (!samplingStopRequested.load())
+        {
+            std::this_thread::sleep_for(waitStep);
+        }
+    }
+    else
+    {
+        auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(args.durationSec);
+        while (!samplingStopRequested.load() && std::chrono::steady_clock::now() < deadline)
+        {
+            std::this_thread::sleep_for(waitStep);
+        }
     }
 
     // 5. Stop the PM sampling and join the decode thread
@@ -325,7 +346,7 @@ void PrintHelp()
     printf("  Misc:\n");
     printf("    Export samples to CSV (default pm_sampling_metrics.csv): --csv/-o <path>\n");
     printf("    Disable CSV export: --no-csv\n");
-    printf("    Hold console after finish: --hold/-H\n");
+    printf("    Hold console after finish: --hold/-H [0|1], disable hold with --no-hold\n");
 }
 
 ParsedArgs parseArgs(int argc, char *argv[])
@@ -397,7 +418,18 @@ ParsedArgs parseArgs(int argc, char *argv[])
         }
         else if (arg == "--hold" || arg == "-H")
         {
-            args.holdOnExit = 1;
+            if (i + 1 < argc && argv[i + 1][0] != '-')
+            {
+                args.holdOnExit = std::stoi(argv[++i]) != 0;
+            }
+            else
+            {
+                args.holdOnExit = 1;
+            }
+        }
+        else if (arg == "--no-hold")
+        {
+            args.holdOnExit = 0;
         }
         else if (arg == "--help" || arg == "-h")
         {
