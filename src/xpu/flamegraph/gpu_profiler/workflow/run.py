@@ -4,25 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Dict
 
-from workflow import (
-    agnews_textcnn,
-    cifar_resnet,
-    convnext_benchmark,
-    dcnv2_ctr,
-    jena_lstm,
-    movielens_mf,
-    qwen3_0p6b,
-    qwen3_1p7b,
-    qwen3_4b,
-    sd_turbo_t2i,
-    shakespeare_gpt,
-    synthetic_embedding_dlrm,
-    synthetic_gemm_fp32,
-    synthetic_gemm_tensor,
-    synthetic_resnet50,
-    synthetic_transformer_encoder,
-)
-from workflow.common import log_complete, prep_path, select_device, setup_logger
+import agnews_textcnn, cifar_resnet,convnext_benchmark,dcnv2_ctr,jena_lstm,movielens_mf,qwen3_0p6b,qwen3_1p7b,qwen3_4b,sd_turbo_t2i,shakespeare_gpt,synthetic_embedding_dlrm,synthetic_gemm_fp32,synthetic_gemm_tensor,synthetic_resnet50,synthetic_transformer_encoder
+from common import log_complete, prep_path, select_device, setup_logger
 
 
 @dataclass
@@ -35,7 +18,7 @@ class Workflow:
 
 def add_shared_args(p: argparse.ArgumentParser) -> None:
     p.add_argument("--mode", choices=["train", "infer"], default="train")
-    p.add_argument("--device", choices=["cuda", "mps", "cpu"], default=None)
+    p.add_argument("--device", choices=["cuda", "mps", "cpu"], default="cuda")
     p.add_argument("--data-root", type=Path, default=Path("data"))
     p.add_argument("--artifact-dir", type=Path, default=Path("artifacts"))
     p.add_argument("--log-dir", type=Path, default=Path("logs"))

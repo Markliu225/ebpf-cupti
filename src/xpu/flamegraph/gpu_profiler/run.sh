@@ -12,8 +12,11 @@ PM_SAMPLING_DURATION=${PM_SAMPLING_DURATION:-0}
 PM_SAMPLING_DECODE_INTERVAL=${PM_SAMPLING_DECODE_INTERVAL:-500}
 PM_SAMPLING_PID=""
 
-TEST1_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test1.py"
-TEST2_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test2.py"
+# TEST1_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test1.py"
+TEST1_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/workflow/run.py synthetic_gemm_tensor --mode train --epochs 10"
+# TEST2_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test2.py"
+TEST2_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/workflow/run.py synthetic_gemm_fp32 --mode train --epochs 10"
+
 
 OUT_BASE="${FLAMEGRAPH_DIR}/demores_dual"
 TEST1_OUT="${OUT_BASE}/test1"

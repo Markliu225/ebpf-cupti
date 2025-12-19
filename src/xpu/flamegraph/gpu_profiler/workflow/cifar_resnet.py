@@ -7,7 +7,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, models, transforms
 
-from workflow.common import recommended_num_workers
+from common import recommended_num_workers
 
 
 def add_args(p) -> None:

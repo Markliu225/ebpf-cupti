@@ -1,6 +1,6 @@
 import torch
 
-from workflow import qwen3_common
+import qwen3_common
 
 DEFAULT_MODEL = "Qwen/Qwen3-0.6B"
 
