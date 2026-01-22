@@ -1,60 +1,73 @@
 #!/bin/bash
-set -euo pipefail
+set -e
 
 # === 配置 ===
 PYTHON_BIN="/home/mark/anaconda3/envs/ebpf-cupti/bin/python"
-NSYS_BIN="/usr/local/cuda/bin/nsys"
-OUT_DIR="./results_nsys_power_$(date +%Y%m%d_%H%M%S)"
+NCU_BIN="/usr/local/cuda/bin/ncu"
+OUT_DIR="./results_symmetric"
 mkdir -p "$OUT_DIR"
 
-echo "=== Starting Nsight Systems (Power Sequence) ==="
-echo "Output Directory: $OUT_DIR"
+# 关键指标: 指令数(死数), 显存流量(会波动), L2 Miss(干扰的核心证据)
+METRICS="sm__inst_executed.sum,dram__bytes.sum,l2__misses.sum"
 
-# 检查 nsys
-if [ ! -f "$NSYS_BIN" ]; then
-    if command -v nsys &> /dev/null; then NSYS_BIN="nsys"; else echo "nsys not found"; exit 1; fi
-fi
+echo "=== 开始对称干扰实验 ==="
 
-# 1. Profiling
-echo ">>> Step 1: Profiling..."
-sudo "$NSYS_BIN" profile \
-    --trace=cuda,nvtx,osrt \
-    --sample=process-tree \
-    --gpu-metrics-device=all \
-    --gpu-metrics-frequency=10000 \
-    --output="$OUT_DIR/parallel_run" \
-    --force-overwrite=true \
-    "$PYTHON_BIN" "launcher.py"
+# ==========================================
+# 阶段 1: 背景是 B，测量 A
+# ==========================================
+echo ""
+echo ">>> Phase 1: Noise = B, Target = A"
 
-# 2. Exporting to SQLite
-echo ">>> Step 2: Exporting to SQLite..."
+# 1.1 后台启动 B (Noise)
+echo "    Starting Noise B..."
+"$PYTHON_BIN" universal_task.py --type B --role noise > /dev/null 2>&1 &
+NOISE_PID=$!
+sleep 4 # 等待 B 跑满
 
-# 找到生成的 .nsys-rep 文件
-REPORT_FILE=$(find "$OUT_DIR" -name "parallel_run*.nsys-rep" | head -n 1)
+# 1.2 用 NCU 测量 A (Target)
+# 抓取 50 次连续的 A 的内核
+echo "    Profiling A (under B's pressure)..."
+sudo "$NCU_BIN" \
+    --csv --log-file "$OUT_DIR/A_under_B.csv" --force-overwrite \
+    --target-processes all \
+    --nvtx --nvtx-include "Task_A_Compute/" \
+    --launch-count 50 \
+    --metrics "$METRICS" \
+    "$PYTHON_BIN" universal_task.py --type A --role target --iters 50
 
-if [ -f "$REPORT_FILE" ]; then
-    echo "Found report: $REPORT_FILE"
-    
-    # === [关键修改] ===
-    # 1. 获取文件名 (去掉路径和后缀)，例如 "parallel_run"
-    BASENAME=$(basename "$REPORT_FILE" .nsys-rep)
-    
-    # 2. 拼接目标路径，强制指定输出到 OUT_DIR
-    OUTPUT_SQLITE="$OUT_DIR/$BASENAME.sqlite"
-    
-    echo "Exporting to: $OUTPUT_SQLITE"
+# 1.3 杀掉 B
+kill $NOISE_PID
+wait $NOISE_PID 2>/dev/null || true
 
-    sudo "$NSYS_BIN" export \
-        --type sqlite \
-        --output "$OUTPUT_SQLITE" \
-        --force-overwrite=true \
-        "$REPORT_FILE"
-        
-    echo "Export successful."
-else
-    echo "Error: Report file not found."
-    exit 1
-fi
 
-echo "=== Done ==="
-echo "Files are located in: $OUT_DIR"
+# ==========================================
+# 阶段 2: 背景是 A，测量 B
+# ==========================================
+echo ""
+echo ">>> Phase 2: Noise = A, Target = B"
+
+# 2.1 后台启动 A (Noise)
+echo "    Starting Noise A..."
+"$PYTHON_BIN" universal_task.py --type A --role noise > /dev/null 2>&1 &
+NOISE_PID=$!
+sleep 4 # 等待 A 跑满
+
+# 2.2 用 NCU 测量 B (Target)
+echo "    Profiling B (under A's pressure)..."
+sudo "$NCU_BIN" \
+    --csv --log-file "$OUT_DIR/B_under_A.csv" --force-overwrite \
+    --target-processes all \
+    --nvtx --nvtx-include "Task_B_Memory/" \
+    --launch-count 50 \
+    --metrics "$METRICS" \
+    "$PYTHON_BIN" universal_task.py --type B --role target --iters 50
+
+# 2.3 杀掉 A
+kill $NOISE_PID
+wait $NOISE_PID 2>/dev/null || true
+
+echo ""
+echo "=== 实验结束 ==="
+echo "数据已保存:"
+echo "1. $OUT_DIR/A_under_B.csv (A 的指标序列)"
+echo "2. $OUT_DIR/B_under_A.csv (B 的指标序列)"

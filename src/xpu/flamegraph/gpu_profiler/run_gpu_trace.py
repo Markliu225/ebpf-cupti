@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-#然后，你要结合每个任务他们kernel的执行时间线，搞清楚哪个kernel在什么时候是哪些指标。我举个例子，任务1kernel1在1-3秒执行，任务2kernel1在3-4秒执行，然后2,4,6秒的GPU性能指标是a,b,c，那么我们就可以知道前两秒的指标归属任务1kernel1,第四秒的指标由任务1任务2按比例摊，第六秒的指标归属任务2
-
 import argparse
 import os
 import subprocess
@@ -117,6 +115,7 @@ def merge_traces(cpu_trace: Path, chrome_trace: Path, output_path: Path) -> Trac
     merger.write_folded_output(str(output_path))
     print(f"[MERGE] 合并结果写入 {output_path}")
     return merger
+
 
 def main():
     parser = argparse.ArgumentParser(description="Minimal CPU+GPU profiler wrapper")

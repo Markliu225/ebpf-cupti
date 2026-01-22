@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 FLAMEGRAPH_DIR=$(cd "${SCRIPT_DIR}/.." && pwd)
-PYTHON_BIN=${PYTHON_BIN:-python3}
+PYTHON_BIN="/home/mark/anaconda3/envs/ebpf-cupti/bin/python"
 PM_SAMPLING_DIR="${FLAMEGRAPH_DIR}/pm_sampling"
 PM_SAMPLING_BIN="${PM_SAMPLING_DIR}/pm_sampling"
 PM_SAMPLING_ENABLED=${PM_SAMPLING_ENABLED:-1}
@@ -12,10 +12,10 @@ PM_SAMPLING_DURATION=${PM_SAMPLING_DURATION:-0}
 PM_SAMPLING_DECODE_INTERVAL=${PM_SAMPLING_DECODE_INTERVAL:-500}
 PM_SAMPLING_PID=""
 
-# TEST1_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test1.py"
-TEST1_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/workflow/run.py synthetic_gemm_tensor --mode train --epochs 10"
-# TEST2_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test2.py"
-TEST2_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/workflow/run.py synthetic_gemm_fp32 --mode train --epochs 10"
+TEST1_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test1.py"
+# TEST1_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/workflow/run.py synthetic_gemm_tensor --mode train --epochs 10"
+TEST2_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/test2.py"
+#TEST2_CMD="cd ${FLAMEGRAPH_DIR} && ${PYTHON_BIN} gpu_profiler/workflow/run.py synthetic_gemm_fp32 --mode train --epochs 10"
 
 
 OUT_BASE="${FLAMEGRAPH_DIR}/demores_dual"
@@ -97,7 +97,7 @@ start_pm_sampling || {
   log "Unable to launch pm_sampling collector"
   exit 1
 }
-
+sleep 5
 ${PYTHON_BIN} gpu_profiler/run_gpu_trace.py \
   --command "${TEST1_CMD}" \
   --output-dir "${TEST1_OUT}" \
