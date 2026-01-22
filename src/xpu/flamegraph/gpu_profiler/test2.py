@@ -24,7 +24,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=1, help="批大小")
     parser.add_argument("--feature-dim", type=int, default=256, help="输入特征维度")
     parser.add_argument("--hidden-dim", type=int, default=256, help="隐藏层维度")
-    parser.add_argument("--epochs", type=int, default=2, help="训练轮数")
+    parser.add_argument("--epochs", type=int, default=10, help="训练轮数")
     parser.add_argument("--steps-per-epoch", type=int, default=50, help="每轮迭代步数")
     parser.add_argument("--lr", type=float, default=5e-4, help="学习率")
     parser.add_argument(
